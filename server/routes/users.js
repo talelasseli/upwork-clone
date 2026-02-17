@@ -47,4 +47,15 @@ router.get("/me", async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const [users] = await db.query("SELECT * FROM users");
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 module.exports = router;

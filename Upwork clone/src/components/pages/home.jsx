@@ -7,7 +7,16 @@ import {
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FreelancerOnly, ClientOnly } from "../role-views";
+import { useUser } from "@clerk/clerk-react";
+
 function Home() {
+  const { user, isLoaded } = useUser();
+  if (user && isLoaded) {
+    const role = user?.publicMetadata?.userrole;
+    if (!role) {
+      return <Navigate to="/setup" />;
+    }
+  }
   return (
     <header>
       <main>

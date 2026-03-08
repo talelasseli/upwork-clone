@@ -6,7 +6,7 @@ const { clerkMiddleware } = require("@clerk/express");
 // Import Route Files
 const userRoutes = require("./routes/users");
 const jobRoutes = require("./routes/jobs");
-
+const proposalRoutes = require("./routes/proposals");
 const app = express();
 
 // Middleware
@@ -17,6 +17,7 @@ app.use(clerkMiddleware());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
+app.use("/api/proposals", proposalRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

@@ -16,12 +16,18 @@ function Navbar() {
 
             <ClientOnly>
               <li>
-                <a href="/post-job">Post a Job</a>
+                <Link to="/post-job">Post a Job</Link>
+              </li>
+              <li>
+                <Link to="/my-jobs">My Jobs</Link>
               </li>
             </ClientOnly>
             <FreelancerOnly>
               <li>
                 <Link to="/jobs">Find Jobs</Link>
+              </li>
+              <li>
+                <Link to="/my-proposals">My Proposals</Link>
               </li>
             </FreelancerOnly>
             <li>

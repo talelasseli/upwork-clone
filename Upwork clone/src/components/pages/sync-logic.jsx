@@ -10,9 +10,10 @@ export default function SyncLogic() {
   useEffect(() => {
     const sync = async () => {
       const token = await getToken();
-      
+
       // Pull the role out of the metadata we set in Step 1
       const roleFromMetadata = user.unsafeMetadata.userrole;
+      console.log("Role from metadata:", roleFromMetadata);
 
       await fetch("http://localhost:3000/api/users/sync", {
         method: "POST",

@@ -11,6 +11,8 @@ import JobDetails from "./components/pages/job-details";
 import MyJobs from "./components/pages/my-jobs";
 import Proposals from "./components/pages/my-proposals";
 import RoleSelection from "./components/pages/setup";
+import Contract from "./components/pages/contract";
+import Contracts from "./components/pages/contracts";
 import "./index.css";
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path="/my-jobs" element={<MyJobs />} />
         <Route path="/my-proposals" element={<Proposals />} />
         <Route path="/setup" element={<RoleSelection />} />
+        <Route path="/contract/:proposalId" element={<Contract />} />
+        <Route path="/my-contracts" element={<Contracts />} />
       </Routes>
     </BrowserRouter>
   );

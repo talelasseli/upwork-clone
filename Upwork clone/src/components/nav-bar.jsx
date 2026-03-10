@@ -33,6 +33,9 @@ function Navbar() {
             <li>
               <Link to="/profile">My Profile</Link>
             </li>
+            <li>
+              <Link to="/my-contracts">My Contracts</Link>
+            </li>
           </ul>
         </nav>
       </SignedIn>

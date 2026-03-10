@@ -7,6 +7,7 @@ const { clerkMiddleware } = require("@clerk/express");
 const userRoutes = require("./routes/users");
 const jobRoutes = require("./routes/jobs");
 const proposalRoutes = require("./routes/proposals");
+const contractRoutes = require("./routes/contracts");
 const app = express();
 
 // Middleware
@@ -18,6 +19,7 @@ app.use(clerkMiddleware());
 app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/proposals", proposalRoutes);
+app.use("/api/contracts", contractRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

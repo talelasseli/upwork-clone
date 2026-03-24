@@ -3,6 +3,7 @@ import useFetch from "../use-fetch";
 import { useState } from "react";
 import Navbar from "../nav-bar";
 import { Link } from "react-router-dom";
+import { ClientOnly, FreelancerOnly } from "../role-views";
 
 function Contracts() {
   const { getToken } = useAuth();
@@ -94,6 +95,7 @@ function Contracts() {
       }
     }
   };
+  console.log("Contracts data:", data);
 
   return (
     <>
@@ -199,7 +201,7 @@ function Contracts() {
               <div className="grid gap-6">
                 {data.map((contract) => (
                   <div
-                    key={contract.contractID}
+                    key={contract.id}
                     className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow"
                   >
                     <div className="flex justify-between items-start gap-4 mb-4">
@@ -208,7 +210,7 @@ function Contracts() {
                           {contract.title || "Project Contract"}
                         </h3>
                         <p className="text-gray-600 text-sm">
-                          Contract ID: {contract.contractID}
+                          Contract ID: {contract.id}
                         </p>
                       </div>
                       <div className="flex-shrink-0">
@@ -245,7 +247,9 @@ function Contracts() {
                           Start Date
                         </p>
                         <p className="text-gray-900 font-semibold">
-                          Jan 15, 2024
+                          {contract.start_date
+                            ? new Date(contract.start_date).toLocaleDateString()
+                            : "N/A"}
                         </p>
                       </div>
                       <div>
@@ -253,7 +257,9 @@ function Contracts() {
                           End Date
                         </p>
                         <p className="text-gray-900 font-semibold">
-                          Feb 15, 2024
+                          {contract.end_date
+                            ? new Date(contract.end_date).toLocaleDateString()
+                            : "N/A"}
                         </p>
                       </div>
                     </div>
@@ -262,8 +268,14 @@ function Contracts() {
                     {contract.status?.toLowerCase() === "pending" && (
                       <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <p className="text-yellow-800 text-sm font-medium">
-                          This contract is awaiting your acceptance. Review the
-                          terms and accept to begin work.
+                          <FreelancerOnly>
+                            This contract is awaiting your acceptance. Review
+                            the terms and accept to begin work.
+                          </FreelancerOnly>
+                          <ClientOnly>
+                            This contract is pending acceptance by the
+                            freelancer. Awaiting their response.
+                          </ClientOnly>
                         </p>
                       </div>
                     )}
@@ -294,18 +306,19 @@ function Contracts() {
                       {userId === contract.freelancer_id &&
                         contract.status?.toLowerCase() === "pending" && (
                           <button
-                            onClick={() => handleAccept(contract.contractID)}
-                            disabled={acceptingId === contract.contractID}
+                            onClick={() => handleAccept(contract.id)}
+                            disabled={acceptingId === contract.id}
                             className="flex-1 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {acceptingId === contract.contractID
+                            {acceptingId === contract.id
                               ? "Accepting..."
                               : "Accept Contract"}
                           </button>
                         )}
                       {contract.status?.toLowerCase() !== "pending" && (
                         <button className="flex-1 px-4 py-2 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:border-gray-400 transition-colors">
-                          Message Client
+                          <FreelancerOnly>Message Client</FreelancerOnly>
+                          <ClientOnly>Message Freelancer</ClientOnly>
                         </button>
                       )}
                     </div>

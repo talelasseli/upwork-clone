@@ -142,10 +142,12 @@ function JobDetails() {
                     <h1 className="text-4xl font-bold text-gray-900 mb-2">
                       {job.title}
                     </h1>
-                    <p className="text-gray-600">Posted today</p>
+                    <p className="text-gray-600">
+                      Posted {job.created_at?.split("T")[0]}
+                    </p>
                   </div>
                   <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold">
-                    Active
+                    {job.status || "Open"}
                   </span>
                 </div>
 
@@ -153,7 +155,10 @@ function JobDetails() {
                 <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
                   <div>
                     <p className="text-gray-600 text-xs font-medium mb-2">
-                      Budget
+                      Budget{" "}
+                      {job.budget_type === "fixed"
+                        ? "(Fixed Price)"
+                        : "(Hourly Rate)"}
                     </p>
                     <p className="text-2xl font-bold text-gray-900">
                       ${job.budget}
@@ -164,7 +169,7 @@ function JobDetails() {
                       Timeline
                     </p>
                     <p className="text-lg font-semibold text-gray-900">
-                      1-3 months
+                      {job.timeline}
                     </p>
                   </div>
                   <div>
@@ -172,7 +177,7 @@ function JobDetails() {
                       Level
                     </p>
                     <p className="text-lg font-semibold text-gray-900">
-                      Intermediate
+                      {job.level}
                     </p>
                   </div>
                 </div>

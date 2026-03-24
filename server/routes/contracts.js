@@ -55,8 +55,15 @@ router.post("/", async (req, res) => {
         price,
         start_date,
         end_date,
-      ], // freelancerID will be set when the freelancer accepts the contract
+      ],
+
+      // freelancerID will be set when the freelancer accepts the contract
     );
+    await db.query(
+      "UPDATE proposals SET status = 'accepted' WHERE proposalID = ?",
+      [proposalId],
+    );
+
     res.json({ message: "Contract created!", id: result.insertId });
   } catch (err) {
     res.status(500).json({ error: err.message });

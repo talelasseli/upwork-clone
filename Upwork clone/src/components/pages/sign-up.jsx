@@ -222,31 +222,22 @@ export default function Signup() {
       </header>
 
       {/* Form Container */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-md mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Create your account
-            </h2>
-            <p className="text-gray-600">
-              Signing up as a{" "}
-              <span className="font-semibold text-gray-900 capitalize">
-                {role}
-              </span>
-            </p>
-          </div>
-
-          <SignUp
-            unsafeMetadata={{ userrole: role }}
-            afterSignUpUrl="/sync-logic"
-            appearance={{
-              elements: {
-                footerAction: { display: "none" },
-              },
-            }}
-          />
-        </div>
-      </main>
+      <div></div>
+      <div className="max-w-md mx-auto mt-10 p-6  rounded-lg ">
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          Signing in as a {role === "client" ? "Client" : "Freelancer"}
+        </h2>
+        <SignUp
+          unsafeMetadata={{ userrole: role }}
+          afterSignUpUrl="/sync-logic"
+          appearance={{
+            elements: {
+              footerAction: { display: "none" },
+              headerAction: { display: "none" },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }

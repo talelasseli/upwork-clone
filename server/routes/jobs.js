@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   const { userId } = getAuth(req);
   if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
-  const { title, description, budget } = req.body;
+  const { title, description, budget,level,category,budget_type,timeline } = req.body;
 
   try {
     const [user] = await db.query(
@@ -33,8 +33,8 @@ router.post("/", async (req, res) => {
     }
 
     const [result] = await db.query(
-      "INSERT INTO jobs (title, description, budget, job_ownerID) VALUES (?, ?, ?, ?)",
-      [title, description, budget, userId],
+      "INSERT INTO jobs (title, description, budget, job_ownerID, level, category, created_at,budget_type,timeline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [title, description, budget, userId, level, category, new Date(), budget_type, timeline],
     );
     res.json({ message: "Job posted!", jobId: result.insertId });
   } catch (err) {
@@ -65,8 +65,8 @@ router.post("/:id/proposals", async (req, res) => {
 
   try {
     await db.query(
-      "INSERT INTO proposals (jobID, prop_ownerID, title, bid, status) VALUES (?, ?, ?, ?, ?)",
-      [jobId, userId, coverLetter, bid, "pending"],
+      "INSERT INTO proposals (jobID, prop_ownerID, title, bid, status,created_at) VALUES (?, ?, ?, ?, ?, ?)",
+      [jobId, userId, coverLetter, bid, "pending", new Date()],
     );
     res.json({ message: "Proposal submitted!" });
   } catch (err) {

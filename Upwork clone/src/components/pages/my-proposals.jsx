@@ -3,7 +3,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useState } from "react";
 import Navbar from "../nav-bar";
 import { Link } from "react-router-dom";
-
+import { formatDistanceToNow } from "date-fns";
 function Proposals() {
   const { getToken } = useAuth();
   const [deletingId, setDeletingId] = useState(null);
@@ -242,7 +242,9 @@ function Proposals() {
                           Submitted
                         </p>
                         <p className="text-gray-900 font-semibold">
-                          2 days ago
+                          {formatDistanceToNow(new Date(proposal.created_at), {
+                            addSuffix: true,
+                          })}
                         </p>
                       </div>
                       <div>
@@ -286,15 +288,17 @@ function Proposals() {
                       <button className="flex-1 px-4 py-2 border border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors">
                         View Details
                       </button>
-                      <button
-                        onClick={() => handleDelete(proposal.proposalID)}
-                        disabled={deletingId === proposal.proposalID}
-                        className="flex-1 px-4 py-2 border border-red-300 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {deletingId === proposal.proposalID
-                          ? "Deleting..."
-                          : "Delete"}
-                      </button>
+                      {proposal.status?.toLowerCase() !== "accepted" && (
+                        <button
+                          onClick={() => handleDelete(proposal.proposalID)}
+                          disabled={deletingId === proposal.proposalID}
+                          className="flex-1 px-4 py-2 border border-red-300 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {deletingId === proposal.proposalID
+                            ? "Deleting..."
+                            : "Delete"}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
